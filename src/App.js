@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import ProductList from './components/ProductList';
+import Catalogue from './components/Catalogue';
 
 import { PRODUCTS } from './utils/constants'
 
@@ -42,14 +42,13 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>API Posts</h1>
       {loading && <div>A moment please...</div>}
       {error && (
-        <div>{`There is a problem fetching the post data - ${error}`}</div>
+        <div>{`There is a problem fetching the data - ${error}`}</div>
       )}
       <ul>
         {data &&
-           <ProductList data={data}/>   
+           <Catalogue data={data}/>   
           }
       </ul>
     </div>
