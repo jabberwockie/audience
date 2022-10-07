@@ -3,23 +3,22 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import PropTypes from "prop-types"
 
-const Cart = ({ open, toggle, products }) => {
+const Cart = ({ open, toggle, basket, updateCart }) => {
   const [subtotal, setSubtotal] = useState(0)
 
   const removeItem = (prodId) => {
-    products = products.map(item => {
-      console.log("wtf", item.id)
-      console.log("dafuq!", prodId)
-      return item.id !== products.id
-    })
-  }
+    const newBasket = basket.filter(item => item.id !== prodId)
+    console.log('newBastek', basket)
+    updateCart(newBasket)
+    }
 
   useEffect(() => {
-    products.forEach(item => {
+    basket.forEach(item => {
       const aux = subtotal + item.price
       setSubtotal(aux)
+      console.log(item.id)
     })
-  }, [products])
+  }, [basket])
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -68,7 +67,7 @@ const Cart = ({ open, toggle, products }) => {
                       <div className="mt-8">
                         <div className="flow-root">
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
-                            {products.map((product) => (
+                            {basket.map((product) => (
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
@@ -94,7 +93,7 @@ const Cart = ({ open, toggle, products }) => {
                                       <button
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
-                                        
+                                        onClick={() => removeItem(product.id)}
                                       >
                                         Remove
                                       </button>
@@ -150,7 +149,7 @@ const Cart = ({ open, toggle, products }) => {
 Cart.propTypes = {
   open: PropTypes.bool,
   toggle: PropTypes.func,
-  products: PropTypes.array,
+  basket: PropTypes.array,
   subtotal: PropTypes.number,
   updateCart: PropTypes.func
 };

@@ -12,9 +12,9 @@ const Catalogue = allProducts => {
     setOpen(!open)
   }, [open])
 
-  // const updateCart = useCallback((updatedBasket) => {
-  //   setBasket(updatedBasket)
-  // }, [basket])
+  const updateCart = useCallback((updatedBasket) => {
+    setBasket(updatedBasket)
+  }, [basket])
 
   return (
     <div className="bg-gray-100">
@@ -22,7 +22,8 @@ const Catalogue = allProducts => {
         <Cart
           open={open}
           toggle={toggle}
-          products={basket}
+          basket={basket}
+          updateCart={updateCart}
         />
         <CartButton toggle={toggle} />
       </div>
