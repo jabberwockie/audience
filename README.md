@@ -14,6 +14,25 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+#### Issues with CORS in API call
+If you encounter this error:
+`Access to fetch at 'https://us-central1-techtaskapi.cloudfunctions.net/offers' from origin 'http://localhost:3000' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.`
+
+Please follow these steps to create a proxy:
+`git clone https://github.com/Rob--W/cors-anywhere.git
+cd cors-anywhere/`
+`npm install`
+`heroku create`
+`git push heroku master`
+
+After running those commands, you’ll end up with your own CORS Anywhere server running at, e.g., `https://cryptic-headland-94862.herokuapp.com/`.
+
+Now, prefix your request URL with the URL for your proxy:
+
+`https://cryptic-headland-94862.herokuapp.com/https://us-central1-techtaskapi.cloudfunctions.net/offers`
+
+Please note that the project is uploaded using the original url and that the proxied one is commented in the `utils/constants.js` file. 
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
