@@ -11,12 +11,13 @@ export default function App() {
   const [error, setError] = useState(null);
 
   const config = {
-      origin: 'http://localhost:3000',
-      headers: {
-        "access-control-allow-origin" : "*",
-        "Content-Type": "application/json",
-        "Accept": "*/*",
-      }}
+    origin: 'http://localhost:3000',
+    headers: {
+      "access-control-allow-origin": "*",
+      "Content-Type": "application/json",
+      "Accept": "*/*",
+    }
+  }
   useEffect(() => {
     fetch(PRODUCTS, config)
       .then((response) => {
@@ -42,14 +43,14 @@ export default function App() {
 
   return (
     <div className="App">
-      {loading && <div>A moment please...</div>}
+      {loading && <div>Loading...</div>}
       {error && (
         <div>{`There is a problem fetching the data - ${error}`}</div>
       )}
       <ul>
         {data &&
-           <Catalogue data={data}/>   
-          }
+          <Catalogue data={data} />
+        }
       </ul>
     </div>
   );

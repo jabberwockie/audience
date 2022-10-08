@@ -5,20 +5,18 @@ import PropTypes from "prop-types"
 
 const Cart = ({ open, toggle, basket, updateCart }) => {
   const [subtotal, setSubtotal] = useState(0)
-
-  const removeItem = (prodId) => {
-    const newBasket = basket.filter(item => item.id !== prodId)
-    console.log('newBastek', basket)
+  
+  const removeItem = (uniqueKey) => {
+    const newBasket = basket.filter(item => item.uniqueKey !== uniqueKey)
     updateCart(newBasket)
-    }
+  }
 
   useEffect(() => {
     basket.forEach(item => {
       const aux = subtotal + item.price
       setSubtotal(aux)
-      console.log(item.id)
     })
-  }, [basket])
+  }, [toggle])
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -68,7 +66,7 @@ const Cart = ({ open, toggle, basket, updateCart }) => {
                         <div className="flow-root">
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
                             {basket.map((product) => (
-                              <li key={product.id} className="flex py-6">
+                              <li key={product.uniqueKey} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
                                     src={product.image}
@@ -93,7 +91,9 @@ const Cart = ({ open, toggle, basket, updateCart }) => {
                                       <button
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
-                                        onClick={() => removeItem(product.id)}
+                                        onClick={() => {
+                                          removeItem(product.uniqueKey)
+                                        }}
                                       >
                                         Remove
                                       </button>
@@ -113,13 +113,27 @@ const Cart = ({ open, toggle, basket, updateCart }) => {
                         <p>${subtotal}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                      <div className="mt-6">
-                        <a
-                          href="#"
-                          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                        >
-                          Checkout
-                        </a>
+                      <div className="flex flex-row">
+                        <div className="mt-6 grow-0">
+                          <button
+                            href="#"
+                            className="flex items-center justify-center text-indigo-600 border border-transparent border border-indigo-600 hover:text-indigo-900 hover:border-indigo-900 focus:ring-4 focus:outline-none focus:ring-indigo-300 rounded-lg text-sm text-base font-medium px-6 py-3 text-center mr-2 mb-2 "
+                            onClick={() => {
+                              updateCart([])
+                              setSubtotal(0)
+                            }}
+                          >
+                            Empty Cart
+                          </button>
+                        </div>
+                        <div className="mt-6 grow">
+                          <a
+                            href="#"
+                            className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-900"
+                          >
+                            Checkout
+                          </a>
+                        </div>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
