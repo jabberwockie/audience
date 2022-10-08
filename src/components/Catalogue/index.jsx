@@ -7,15 +7,25 @@ const Catalogue = allProducts => {
   let [products, setProducts] = useState(allProducts.data)
   const [basket, setBasket] = useState([])
   const [open, setOpen] = useState(false)
+  const [subtotal, setSubtotal] = useState(0)
+
   let count = useRef(0)
 
   const toggle = useCallback(() => {
     setOpen(!open)
   }, [open])
 
-  const updateCart = useCallback((updatedBasket) => {
+  const updateCart = useCallback((updatedBasket, subtotal) => {
+
+    // basket.forEach(item => {
+    //   const aux = subtotal + item.price
+    //   setSubtotal(aux)
+    // })
+
+    setSubtotal(subtotal)
     setBasket(updatedBasket)
   }, [basket])
+
 
   return (
     <div className="bg-gray-100">
@@ -25,6 +35,7 @@ const Catalogue = allProducts => {
           toggle={toggle}
           basket={basket}
           updateCart={updateCart}
+          subtotal={subtotal}
         />
         <CartButton toggle={toggle} />
       </div>
@@ -38,6 +49,7 @@ const Catalogue = allProducts => {
               basket={basket}
               updateCart={updateCart}
               count={count}
+              subtotal={subtotal}
             />
           ))}
         </div>

@@ -3,20 +3,12 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import PropTypes from "prop-types"
 
-const Cart = ({ open, toggle, basket, updateCart }) => {
-  const [subtotal, setSubtotal] = useState(0)
-  
-  const removeItem = (uniqueKey) => {
+const Cart = ({ open, toggle, basket, updateCart, subtotal }) => {  
+  const removeItem = (uniqueKey, price) => {
     const newBasket = basket.filter(item => item.uniqueKey !== uniqueKey)
-    updateCart(newBasket)
+    subtotal = subtotal - price
+    updateCart(newBasket, subtotal)
   }
-
-  useEffect(() => {
-    basket.forEach(item => {
-      const aux = subtotal + item.price
-      setSubtotal(aux)
-    })
-  }, [toggle])
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -85,14 +77,12 @@ const Cart = ({ open, toggle, basket, updateCart }) => {
                                     </div>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {product.quantity}</p>
-
                                     <div className="flex">
                                       <button
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                         onClick={() => {
-                                          removeItem(product.uniqueKey)
+                                          removeItem(product.uniqueKey, product.price)
                                         }}
                                       >
                                         Remove
