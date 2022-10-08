@@ -1,0 +1,1 @@
+export const PRODUCTS = 'https://warm-woodland-52069.herokuapp.com/https://us-central1-techtaskapi.cloudfunctions.net/offers'
