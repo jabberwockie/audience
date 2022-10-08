@@ -2,15 +2,17 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import AddToCartModal from "../AddToCartModal";
 
-const ProductCard = (props) => {
-  const { product = {}, basket, updateCart, count } = props
+const ProductCard = ({ product = {}, basket, updateCart, count, subtotal }) => {
   const [open, setOpen] = useState(false)
 
   const handleClick = (prod) => {
     count.current++
     const newProduct = { ...product, uniqueKey: count.current }
     const aux = [...basket, newProduct];
-    updateCart(aux)
+    subtotal = subtotal + product.price
+  
+
+    updateCart(aux, subtotal)
     setOpen(!open)
   }
 
